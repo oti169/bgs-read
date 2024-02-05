@@ -60,7 +60,7 @@
     </div>
     <div class="item-heading q-pt-md">Links</div>
     <div class="q-pt-sm">
-      <a class="external-link" href="slack://channel?team=TQC64RB70&id=C04FLRVHKQQ">Slack: BGS Alumni / bgs-new-testament-all</a>
+      <a class="external-link" href="slack://channel?team=TQC64RB70&id=C069MRSEK2T">Slack: BGS Alumni / 2024-bgs-new-testament-leaders</a>
     </div>
     <div class="q-pt-sm">
       <a class="external-link" href="https://www.becomegoodsoil.com">Become Good Soil</a>
