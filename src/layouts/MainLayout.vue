@@ -19,4 +19,5 @@ import { DateTime } from 'luxon'
 const calendarDate = ref(DateTime.now().toFormat('yyyy/MM/dd'))
 const leftDrawerOpen = ref(false)
 provide('calendarDate', calendarDate)
+provide('leftDrawerOpen', leftDrawerOpen)
 </script>

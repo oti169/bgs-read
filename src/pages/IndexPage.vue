@@ -10,8 +10,14 @@
       <q-list v-else>
         <q-item>
           <q-item-section>
-            <q-item-label overline>Date</q-item-label>
-            <q-item-label>{{ dayInfo.day }}, {{ thisYear }}</q-item-label>
+            <q-item-label class="text-h4 text-grey-7">
+              {{ dayInfo.day }}, {{ thisYear }}
+              <q-btn v-if="!leftDrawerOpen" icon="event" round flat color="primary">
+                <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                  <q-date v-model="calendarDate"></q-date>
+                </q-popup-proxy>
+              </q-btn>
+            </q-item-label>
           </q-item-section>
         </q-item>
         <q-item v-for="rb in ['psalm', 'ntr']" :key="`rb-${rb}`">
@@ -23,33 +29,35 @@
               :href="bgLink(dayInfo[rb], tr)"
               class="external-link q-pr-sm"
               rel="noopener noreferrer"
+              target="_blank"
             >{{ tr }}</a></q-item-label>
           </q-item-section>
         </q-item>
-        <q-item v-for="ib in ['intro', 'tbp', 'ex1', 'ex2', 'tmm', 'morg']" :key="ib">
-          <q-item-section>
-            <q-item-label overline class="item-heading">{{ itemBits[ib] }}</q-item-label>
-            <q-item-label>
-              <span v-if="dayInfo[ib]" v-html="dayInfo[ib]"></span>
-              <span v-else class="text-grey"><em>N/A</em></span>
-            </q-item-label>
-          </q-item-section>
-        </q-item>
+        <template v-for="ib in ['intro', 'tbp', 'ex1', 'ex2', 'tmm', 'morg']" :key="ib">
+          <q-item v-if="dayInfo[ib]">
+            <q-item-section>
+              <q-item-label overline class="item-heading">{{ itemBits[ib] }}</q-item-label>
+              <q-item-label>
+                <span v-html="dayInfo[ib]"></span>
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+        </template>
       </q-list>
-      <div class="row q-col-gutter-sm">
-        <div class="col-4">
+      <div class="row q-col-gutter-sm q-mt-md q-pa-md">
+        <div class="col-sm-4 col-md-2">
           <q-btn id="btn-prev-day" outline square class="col-4 full-width bgs-nav" color="primary" @click="changeDay(-1)">
             <div class="q-pt-xs">
               <q-icon class="fix-icon-align" name="mdi-skip-previous" size="xs"></q-icon>{{ prevDay }}
             </div>
           </q-btn>
         </div>
-        <div class="col-4">
+        <div class="col-sm-4 col-md-2">
           <q-btn id="btn-this-day" outline square class="col-4 full-width bgs-nav" color="primary" @click="loadToday()">
             <div class="q-pt-xs">Today</div>
           </q-btn>
         </div>
-        <div class="col-4">
+        <div class="col-sm-4 col-md-2">
           <q-btn id="btn-next-day" outline square class="col-4 full-width bgs-nav" color="primary" @click="changeDay(1)">
             <div class="q-pt-xs">
               {{ nextDay }}<q-icon class="fix-icon-align" name="mdi-skip-next" size="xs"></q-icon>
@@ -58,18 +66,20 @@
         </div>
       </div>
     </div>
-    <div class="item-heading q-pt-md">Links</div>
-    <div class="q-pt-sm">
-      <a class="external-link" href="slack://channel?team=TQC64RB70&id=C069MRSEK2T">Slack: BGS Alumni / 2024-bgs-new-testament-leaders</a>
-    </div>
-    <div class="q-pt-sm">
-      <a class="external-link" href="https://www.becomegoodsoil.com">Become Good Soil</a>
-    </div>
-    <div class="q-pt-sm">
-      <a class="external-link" href="https://becomegoodsoil.com/becoming-a-king/">Becoming a King</a>
-    </div>
-    <div class="q-pt-sm">
-      <a class="external-link" :href="spreadsheetLocns[thisYear]">Source sheet</a>
+    <div class="q-pa-md">
+      <div class="item-heading q-pt-md">Links</div>
+      <div class="q-pt-sm">
+        <a class="external-link" href="slack://channel?team=TQC64RB70&id=C069MRSEK2T">Slack: BGS Alumni / 2024-bgs-new-testament-leaders</a>
+      </div>
+      <div class="q-pt-sm">
+        <a class="external-link" href="https://www.becomegoodsoil.com">Become Good Soil</a>
+      </div>
+      <div class="q-pt-sm">
+        <a class="external-link" href="https://becomegoodsoil.com/becoming-a-king/">Becoming a King</a>
+      </div>
+      <div class="q-pt-sm">
+        <a class="external-link" :href="spreadsheetLocns[thisYear]">Source sheet</a>
+      </div>
     </div>
   </q-page>
 </template>
@@ -81,12 +91,17 @@ import { DateTime } from 'luxon'
 
 const spreadsheetLocns = {
   2023: 'https://docs.google.com/spreadsheets/d/1Yo1Wj3SbbN_xIZibhsCwy2bvG77Syj_hNWZH6QbmEVw/htmlview',
-  2024: 'https://docs.google.com/spreadsheets/d/1zs3x5trgorscFHxuy0P9Fmq8ZvUwJcC-hQkRYBa3EK8/htmlview'
+  2024: 'https://docs.google.com/spreadsheets/d/1zs3x5trgorscFHxuy0P9Fmq8ZvUwJcC-hQkRYBa3EK8/htmlview',
+  2025: 'https://docs.google.com/spreadsheets/d/1Yo1Wj3SbbN_xIZibhsCwy2bvG77Syj_hNWZH6QbmEVw/htmlview',
+  2026: 'https://docs.google.com/spreadsheets/d/1zs3x5trgorscFHxuy0P9Fmq8ZvUwJcC-hQkRYBa3EK8/htmlview',
+  2027: 'https://docs.google.com/spreadsheets/d/1Yo1Wj3SbbN_xIZibhsCwy2bvG77Syj_hNWZH6QbmEVw/htmlview',
+  2028: 'https://docs.google.com/spreadsheets/d/1zs3x5trgorscFHxuy0P9Fmq8ZvUwJcC-hQkRYBa3EK8/htmlview'
 }
 const stillLoading = ref(true)
 const missingYear = ref(false)
 const sheetData = ref([])
 const calendarDate = inject('calendarDate')
+const leftDrawerOpen = inject('leftDrawerOpen')
 
 const readingBits = {
   psalm: 'Psalms/Proverbs',
@@ -139,6 +154,7 @@ function bgLink (bibleRef, translation) {
 async function loadSheetData (year) {
   if (!spreadsheetLocns[year]) {
     missingYear.value = true
+    stillLoading.value = false
     return
   }
   missingYear.value = false
