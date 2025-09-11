@@ -90,12 +90,12 @@ import axios from 'axios'
 import { DateTime } from 'luxon'
 
 const spreadsheetLocns = {
-  2023: 'https://docs.google.com/spreadsheets/d/1Yo1Wj3SbbN_xIZibhsCwy2bvG77Syj_hNWZH6QbmEVw/htmlview',
-  2024: 'https://docs.google.com/spreadsheets/d/1zs3x5trgorscFHxuy0P9Fmq8ZvUwJcC-hQkRYBa3EK8/htmlview',
-  2025: 'https://docs.google.com/spreadsheets/d/1Yo1Wj3SbbN_xIZibhsCwy2bvG77Syj_hNWZH6QbmEVw/htmlview',
-  2026: 'https://docs.google.com/spreadsheets/d/1zs3x5trgorscFHxuy0P9Fmq8ZvUwJcC-hQkRYBa3EK8/htmlview',
-  2027: 'https://docs.google.com/spreadsheets/d/1Yo1Wj3SbbN_xIZibhsCwy2bvG77Syj_hNWZH6QbmEVw/htmlview',
-  2028: 'https://docs.google.com/spreadsheets/d/1zs3x5trgorscFHxuy0P9Fmq8ZvUwJcC-hQkRYBa3EK8/htmlview'
+  2023: 'https://docs.google.com/spreadsheets/u/0/d/1Yo1Wj3SbbN_xIZibhsCwy2bvG77Syj_hNWZH6QbmEVw/htmlview/sheet?headers=true&gid=85547488',
+  2024: 'https://docs.google.com/spreadsheets/u/0/d/1zs3x5trgorscFHxuy0P9Fmq8ZvUwJcC-hQkRYBa3EK8/htmlview/sheet?headers=true&gid=1901277937',
+  2025: 'https://docs.google.com/spreadsheets/u/0/d/1Yo1Wj3SbbN_xIZibhsCwy2bvG77Syj_hNWZH6QbmEVw/htmlview/sheet?headers=true&gid=85547488',
+  2026: 'https://docs.google.com/spreadsheets/u/0/d/1zs3x5trgorscFHxuy0P9Fmq8ZvUwJcC-hQkRYBa3EK8/htmlview/sheet?headers=true&gid=1901277937',
+  2027: 'https://docs.google.com/spreadsheets/u/0/d/1Yo1Wj3SbbN_xIZibhsCwy2bvG77Syj_hNWZH6QbmEVw/htmlview/sheet?headers=true&gid=85547488',
+  2028: 'https://docs.google.com/spreadsheets/u/0/d/1zs3x5trgorscFHxuy0P9Fmq8ZvUwJcC-hQkRYBa3EK8/htmlview/sheet?headers=true&gid=1901277937'
 }
 const stillLoading = ref(true)
 const missingYear = ref(false)
@@ -160,6 +160,7 @@ async function loadSheetData (year) {
   missingYear.value = false
   stillLoading.value = true
   const htmlContent = await axios.get(spreadsheetLocns[year])
+  console.log(htmlContent.data)
   const parser = new DOMParser()
   const doc = parser.parseFromString(htmlContent.data, 'text/html')
   const table = doc.querySelector('table.waffle')
