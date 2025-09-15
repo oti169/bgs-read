@@ -160,7 +160,6 @@ async function loadSheetData (year) {
   missingYear.value = false
   stillLoading.value = true
   const htmlContent = await axios.get(spreadsheetLocns[year])
-  console.log(htmlContent.data)
   const parser = new DOMParser()
   const doc = parser.parseFromString(htmlContent.data, 'text/html')
   const table = doc.querySelector('table.waffle')
